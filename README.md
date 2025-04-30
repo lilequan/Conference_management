@@ -1,37 +1,22 @@
 # Conference_management
 
 #### 介绍
-线上会议管理系统，帮助各种会议发起者和会议参与者快速集合到一起的平台
+线上会议管理系统，帮助各种会议发起者和会议参与者快速集合到一起的网上平台
 
 #### 软件架构
-软件架构说明
+会务管理系统
+会务参加者模块：
+1． 注册或登录网站
+2． 选择会议（或用邀请码以特邀身份加入会议）
+3． 填写参会的往返时间、住宿要求及其它情况
+4. 虚拟缴费
+会务组织者模块：
+1． 注册或登录网站
+2． 会议相关信息填写，生成新的会议（包括特邀码管理）
+3． 会议相关管理
+4. 签到、入住管理
+管理员模块：
+1. 对各会议进行管理（审核是否通过）
+2. 对注册的人员（包括参会人员及组织人员）进行管理
+3. 系统进行维护管理
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
