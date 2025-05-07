@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>Conference_Managerment</artifactId>
+    <artifactId>Conference_Management</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Conference_Managerment</name>
-    <description>Conference_Managerment</description>
+    <name>Conference_Management</name>
+    <description>Conference_Management</description>
     <url/>
     <licenses>
         <license/>
@@ -47,6 +47,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.4</version>
         </dependency>
     </dependencies>
 
