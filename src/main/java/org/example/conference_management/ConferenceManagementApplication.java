@@ -1,13 +1,12 @@
-package org.example.conference_managerment;
-
+package org.example.conference_management;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ConferenceManagermentApplication {
+public class ConferenceManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConferenceManagermentApplication.class, args);
+        SpringApplication.run(ConferenceManagementApplication.class, args);
     }
 
 }

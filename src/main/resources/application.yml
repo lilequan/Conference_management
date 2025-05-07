@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Conference_Managerment
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/conference_management?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
