@@ -6,4 +6,5 @@ import lombok.Data;
 public class user_conference {
     private int user_id;
     private int conference_id;
+
 }

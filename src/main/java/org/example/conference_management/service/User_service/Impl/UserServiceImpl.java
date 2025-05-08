@@ -5,10 +5,9 @@ import org.example.conference_management.mapper.UserMapper;
 import org.example.conference_management.service.User_service.UserService;
 import org.example.conference_management.pojo.R;
 import org.example.conference_management.pojo.user;
-import org.example.conference_management.vo.conferenceVo;
 import org.example.conference_management.vo.userVo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,16 +16,14 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
 
-
     @Override
     public R userRegister(userVo u) {
         userMapper.userRegister(u);
         return R.SUCCESS("注册成功");
     }
 
-
     @Override
-    public R userLogin( userVo u) {
+    public R userLogin(userVo u) {
 
         user user = userMapper.userLogin(u);
         if (user != null) {
@@ -38,6 +35,15 @@ public class UserServiceImpl implements UserService {
             }
         }
         return R.ERROR("test");
+    }
+
+    @Override
+    public R selectById(String user_name) {
+        int user_id = userMapper.selectById(user_name);
+        if (user_id == 0) {
+            return R.ERROR("不存在的用户");
+        }
+        return R.SUCCESS(user_id);
     }
 
 }

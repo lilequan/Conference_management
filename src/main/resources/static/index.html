@@ -13,12 +13,27 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(120deg, #f6f9fc 0%, #eef2f7 100%);
+            background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         body::before {
@@ -29,20 +44,67 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.8) 0%, transparent 50%);
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
             z-index: 0;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2"/></svg>') repeat,
+                url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>') repeat;
+            opacity: 0.4;
+            z-index: 0;
+            animation: patternFloat 20s linear infinite;
+        }
+
+        @keyframes patternFloat {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100px 100px;
+            }
         }
 
         .login-container {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 2.5rem;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
             width: 100%;
             max-width: 400px;
             position: relative;
             z-index: 1;
+            backdrop-filter: blur(10px);
+            animation: containerFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .login-title {
@@ -53,6 +115,15 @@
             font-weight: 600;
         }
 
+        .login-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -61,60 +132,46 @@
             display: block;
             margin-bottom: 0.5rem;
             color: #4a5568;
-            font-weight: 500;
         }
 
-        .form-group input,
-        .form-group select {
+        .form-group input {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 1rem;
-            background-color: white;
-            transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #4299e1;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .form-group select {
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
             cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234a5568' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            padding-right: 2.5rem;
-        }
-
-        .form-group select:hover {
-            border-color: #4299e1;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-            color: white;
+            transition: all 0.3s ease;
+            font-size: 1rem;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            width: 100%;
         }
 
-        .login-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+        .btn-primary {
+            background-color: #4299e1;
+            color: white;
+            width: 65%;
         }
 
-        .login-btn:active {
-            transform: translateY(0);
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            width: 35%;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
         }
 
         #response {
@@ -141,13 +198,16 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <label for="isAdmin">选择角色</label>
-                <select id="isAdmin" name="isAdmin" required>
-                    <option value="false">用户</option>
+                <label for="role">角色</label>
+                <select id="role" name="isAdmin" required>
+                    <option value="false">普通用户</option>
                     <option value="true">管理员</option>
                 </select>
             </div>
-            <button type="submit" class="login-btn">登录</button>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">登录</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='register.html'">注册</button>
+            </div>
         </form>
         <div id="response"></div>
     </div>
@@ -165,7 +225,7 @@
                 const formData = {
                     user_name: document.getElementById('username').value,
                     password: document.getElementById('password').value,
-                    isAdmin: document.getElementById('isAdmin').value === 'true'
+                    isAdmin: document.getElementById('role').value === 'true'
                 };
 
                 try {
@@ -179,9 +239,19 @@
 
                     const data = await response.json();
                     
-                    // 显示响应数据
-                    responseDiv.style.display = 'block';
-                    responseDiv.textContent = JSON.stringify(data, null, 2);
+                    if (data.state === 200) {
+                        // 保存用户信息到localStorage
+                        localStorage.setItem('user', JSON.stringify({
+                            user_name: formData.user_name,
+                            isAdmin: formData.isAdmin
+                        }));
+                        // 登录成功，跳转到main.html
+                        window.location.href = '/main.html';
+                    } else {
+                        // 显示错误信息
+                        responseDiv.style.display = 'block';
+                        responseDiv.textContent = data.message || '登录失败，请检查用户名和密码';
+                    }
                 } catch (error) {
                     responseDiv.style.display = 'block';
                     responseDiv.textContent = '登录请求失败: ' + error.message;

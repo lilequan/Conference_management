@@ -4,18 +4,18 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.example.conference_management.pojo.user;
-import org.example.conference_management.vo.conferenceVo;
 import org.example.conference_management.vo.userVo;
 
 @Mapper
 public interface UserMapper {
 
 
-    @Insert("insert into user(password,email,user_name) values(#{password},#{email},#{user_name})")
+    @Insert("insert into user(password,user_name,isAdmin) values(#{password},#{user_name},#{isAdmin})")
     void userRegister(userVo u);
 
     @Select("select * from user where user_name=#{user_name}")
     user userLogin(userVo u);
 
-
+    @Select("select user_id from user where user_name=#{user_name}")
+    int selectById(String userName);
 }
