@@ -1,0 +1,28 @@
+CREATE TABLE `conference` (
+                              `conference_id` int NOT NULL AUTO_INCREMENT COMMENT '会议id',
+                              `conference_name` varchar(255)  DEFAULT NULL COMMENT '会议名称',
+                              `convener_id` int DEFAULT NULL COMMENT '会议发起人id',
+                              `conference_state` bool DEFAULT FALSE COMMENT '会议审核状态',
+                              `invitation_code` varchar(255)  COMMENT '特邀码',
+                              PRIMARY KEY (`conference_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会议表';
+
+
+CREATE TABLE `user` (
+                        `user_id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+                        `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '密码',
+                        `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '邮箱',
+                        `user_name` varchar(255)  CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci UNIQUE DEFAULT NULL COMMENT '用户名',
+                        `isAdmin` bool default false comment '是否为管理员',
+                        PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+
+
+CREATE TABLE `user_conference` (
+                                   `user_id` int NOT NULL COMMENT '参会用户id',
+                                   `conference_id` int DEFAULT NULL COMMENT '会议id',
+                                   `round_trip_time` varchar(255) DEFAULT NULL COMMENT '往返时间',
+                                   `accommodation_requirements` varchar(1500) DEFAULT '无' COMMENT '住宿要求',
+                                   `remarks` varchar(1500) DEFAULT '无' COMMENT '备注',
+                                   PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户会议关系表';
