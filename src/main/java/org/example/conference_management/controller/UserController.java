@@ -1,47 +1,39 @@
 package org.example.conference_management.controller;
 
+import jakarta.annotation.Resource;
+import jakarta.websocket.server.PathParam;
+import org.example.conference_management.service.User_service.UserService;
+import org.example.conference_management.pojo.R;
+import org.example.conference_management.vo.userVo;
+import org.springframework.web.bind.annotation.*;
 
-import org.example.conference_management.entity.User;
-import org.example.conference_management.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    UserService userService;
+    @Resource
+    private UserService userService;
 
-    @RequestMapping("/insert")
-    public void insert(User user) {
-        try {
-            userService.insert(user);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    //用户注册
+    @PostMapping("/register")
+    public R userRegister(@RequestBody userVo u) {
+        return userService.userRegister(u);
+    }
+    //用户登入
+    @PostMapping("/login")
+    public R userLogin(@RequestBody userVo u) {
+
+        return userService.userLogin(u);
     }
 
-    @RequestMapping("/delete")
-    public void delete(int userId) {
-        try {
-            userService.delete(userId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/getUserId")
+    public R selectById(@PathParam("user_name")String user_name){
+        return userService.selectById(user_name);
     }
 
-    @RequestMapping("/update")
-    public void update(int updateUserId, User user) {
-        try {
-            userService.update(updateUserId,user);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    //TODO 虚拟缴费
 
-    @RequestMapping("/select")
-    public String select(int userId) {
-        return userService.select(userId).toString();
-    }
+
+
+
 }

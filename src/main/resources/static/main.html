@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会议管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .menu-item {
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            flex: 1;
+            margin-left: 240px;
+        }
+
+        /* 顶部导航栏样式 */
+        .top-nav {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background-color: #cbd5e0;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            min-width: 150px;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+
+        /* 内容区域样式 */
+        .content {
+            padding: 2rem;
+        }
+
+        /* 会议列表样式 */
+        .conference-list {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
+        .conference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .conference-table th,
+        .conference-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .conference-table th {
+            background-color: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .btn-modify {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modify:hover {
+            background-color: #3182ce;
+        }
+
+        .conference-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .add-conference {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4299e1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-conference:hover {
+            background-color: #3182ce;
+        }
+
+        .conference-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .conference-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 创建会议表单样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* 提示消息样式 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 4px;
+            display: none;
+            z-index: 1001;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toast.success {
+            background-color: #48bb78;
+        }
+
+        .toast.error {
+            background-color: #f56565;
+        }
+
+        .toast.show {
+            display: block;
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* 添加新的样式 */
+        .conference-info {
+            flex: 1;
+        }
+
+        .conference-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .conference-info p {
+            color: #718096;
+            margin: 0.25rem 0;
+        }
+
+        .conference-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .conference-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .conference-info {
+            margin-right: 2rem;
+        }
+
+        /* 确认对话框样式 */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-modal.show {
+            display: flex;
+        }
+
+        .confirm-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .confirm-title {
+            font-size: 1.25rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-message {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn-confirm {
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .btn-confirm.danger {
+            background-color: #f56565;
+            color: white;
+            border: none;
+        }
+
+        .btn-confirm.danger:hover {
+            background-color: #e53e3e;
+        }
+
+        .btn-confirm.cancel {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+        }
+
+        .btn-confirm.cancel:hover {
+            background-color: #cbd5e0;
+        }
+
+        .conference-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .conference-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            min-width: 160px;
+        }
+
+        .conference-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .conference-code {
+            margin-right: 2rem;
+        }
+
+        .conference-remarks {
+            color: #718096;
+            font-style: italic;
+        }
+
+        .table-header {
+            text-align: center;
+            font-weight: 600;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>会议管理系统</h2>
+            </div>
+            <div id="menuItems">
+                <!-- 菜单项将通过JavaScript动态添加 -->
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="top-nav">
+                <h1>主页</h1>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar">
+                        <span>👤</span>
+                    </div>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <div class="dropdown-item" id="profileItem">个人信息</div>
+                        <div class="dropdown-item" id="logoutItem">退出登录</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="conference-list">
+                    <div class="conference-header">
+                        <h2>会议管理</h2>
+                        <div class="add-conference" id="addConference">+</div>
+                    </div>
+                    <table class="conference-table">
+                        <thead>
+                            <tr>
+                                <th>会议名称</th>
+                                <th>状态</th>
+                                <th>邀请码</th>
+                                <th>备注</th>
+                                <th class="table-header">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="conferenceList">
+                            <!-- 会议列表将通过JavaScript动态添加 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创建会议表单 -->
+    <div class="modal" id="createConferenceModal">
+        <div class="modal-content">
+            <h2>创建会议</h2>
+            <form id="createConferenceForm">
+                <div class="form-group">
+                    <label for="conferenceName">会议名称</label>
+                    <input type="text" id="conferenceName" name="conference_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="invitationCode">邀请码</label>
+                    <input type="text" id="invitationCode" name="invitation_code" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancelCreate">取消</button>
+                    <button type="submit" class="btn btn-primary">创建</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 修改邀请码表单 -->
+    <div class="modal" id="modifyInvCodeModal">
+        <div class="modal-content">
+            <h2>修改邀请码</h2>
+            <form id="modifyInvCodeForm">
+                <input type="hidden" id="modifyInvCodeConferenceId" name="conference_id">
+                <div class="form-group">
+                    <label for="newInvCode">新邀请码</label>
+                    <input type="text" id="newInvCode" name="invitation_code" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancelModifyInvCode">取消</button>
+                    <button type="submit" class="btn btn-primary">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 修改会议名称表单 -->
+    <div class="modal" id="modifyConferenceNameModal">
+        <div class="modal-content">
+            <h2>修改会议名称</h2>
+            <form id="modifyConferenceNameForm">
+                <input type="hidden" id="modifyConferenceNameId" name="conference_id">
+                <div class="form-group">
+                    <label for="newConferenceName">新会议名称</label>
+                    <input type="text" id="newConferenceName" name="conference_name" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancelModifyConferenceName">取消</button>
+                    <button type="submit" class="btn btn-primary">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 确认删除对话框 -->
+    <div class="confirm-modal" id="deleteConfirmModal">
+        <div class="confirm-content">
+            <div class="confirm-title">确认删除</div>
+            <div class="confirm-message">确定要删除这个会议吗？此操作不可恢复。</div>
+            <div class="confirm-buttons">
+                <button class="btn-confirm cancel" id="cancelDelete">取消</button>
+                <button class="btn-confirm danger" id="confirmDelete">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 用户信息
+        let currentUser = null;
+        let isAdmin = false;
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 从localStorage获取用户信息
+            const userStr = localStorage.getItem('user');
+            console.log('Stored user data:', userStr);
+
+            if (!userStr) {
+                console.log('No user data found in localStorage');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userStr);
+                console.log('Parsed user data:', currentUser);
+
+                // 检查用户数据是否包含必要的字段
+                if (!currentUser) {
+                    throw new Error('User data is null or undefined');
+                }
+
+                // 如果没有user_id但有user_name，尝试从后端获取用户ID
+                if (!currentUser.user_id && currentUser.user_name) {
+                    try {
+                        const response = await fetch(`/user/getUserId?user_name=${encodeURIComponent(currentUser.user_name)}`);
+                        const data = await response.json();
+                        if (data.state === 200 && data.data) {
+                            currentUser.user_id = data.data;
+                            // 更新localStorage中的用户信息
+                            localStorage.setItem('user', JSON.stringify(currentUser));
+                        } else {
+                            throw new Error('Failed to get user ID');
+                        }
+                    } catch (error) {
+                        console.error('Failed to get user ID:', error);
+                        throw new Error('Failed to get user ID');
+                    }
+                }
+
+                // 再次检查用户ID是否存在
+                if (!currentUser.user_id) {
+                    console.error('User ID is missing from user data');
+                    throw new Error('User ID is missing');
+                }
+
+                isAdmin = currentUser.isAdmin || false;
+                console.log('User authentication successful:', { userId: currentUser.user_id, isAdmin: isAdmin });
+
+                // 初始化页面内容
+                initializeMenu();
+                loadConferences();
+
+            } catch (error) {
+                console.error('User authentication failed:', error);
+                // 清除可能损坏的数据
+                localStorage.removeItem('user');
+                window.location.href = '/login.html';
+            }
+
+            // 用户菜单事件
+            document.getElementById('userAvatar').addEventListener('click', function() {
+                document.getElementById('userDropdown').classList.toggle('show');
+            });
+
+            document.getElementById('profileItem').addEventListener('click', function() {
+                // TODO: 实现个人信息页面
+                document.getElementById('userDropdown').classList.remove('show');
+            });
+
+            document.getElementById('logoutItem').addEventListener('click', function() {
+                // 清除缓存并返回登录页
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '/login.html';
+            });
+
+            // 创建会议相关事件
+            document.getElementById('addConference').addEventListener('click', function() {
+                document.getElementById('createConferenceModal').classList.add('show');
+            });
+
+            document.getElementById('cancelCreate').addEventListener('click', function() {
+                closeAllModals();
+                document.getElementById('createConferenceForm').reset();
+            });
+
+            document.getElementById('createConferenceForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = {
+                    conference_name: document.getElementById('conferenceName').value,
+                    invitation_code: document.getElementById('invitationCode').value,
+                    convener_id: currentUser.user_id
+                };
+
+                try {
+                    const response = await fetch('/conference/createConference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    if (data.state === 200) {
+                        closeAllModals();
+                        document.getElementById('createConferenceForm').reset();
+                        showToast('会议创建成功！', 'success');
+                        window.location.reload();
+                    } else {
+                        showToast('创建失败：' + (data.msg || '请稍后重试'), 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to create conference:', error);
+                    showToast('创建失败：网络错误，请稍后重试', 'error');
+                }
+            });
+        });
+
+        // 初始化菜单
+        function initializeMenu() {
+            const menuItems = document.getElementById('menuItems');
+            const userMenu = [
+                { text: '会议管理', id: 'conferenceManagement' },
+                { text: '加入会议', id: 'joinConference' },
+                { text: '虚拟缴费', id: 'virtualPayment' }
+            ];
+
+            const adminMenu = [
+                ...userMenu,
+                { text: '用户管理', id: 'userManagement' },
+                { text: '会议审核', id: 'conferenceReview' }
+            ];
+
+            const menu = isAdmin ? adminMenu : userMenu;
+            menu.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'menu-item';
+                div.textContent = item.text;
+                div.id = item.id;
+                div.addEventListener('click', () => handleMenuClick(item.id));
+                menuItems.appendChild(div);
+            });
+        }
+
+        // 处理菜单点击
+        function handleMenuClick(menuId) {
+            // 移除所有菜单项的active类
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 为当前点击的菜单项添加active类
+            document.getElementById(menuId).classList.add('active');
+
+            // 根据菜单ID处理不同的功能
+            switch(menuId) {
+                case 'conferenceManagement':
+                    loadConferences();
+                    break;
+                case 'joinConference':
+                    // TODO: 实现加入会议功能
+                    break;
+                case 'virtualPayment':
+                    // TODO: 实现虚拟缴费功能
+                    break;
+                case 'userManagement':
+                    // TODO: 实现用户管理功能
+                    break;
+                case 'conferenceReview':
+                    // TODO: 实现会议审核功能
+                    break;
+            }
+        }
+
+        // 加载会议列表
+        let deleteConferenceId = null;
+
+        async function loadConferences() {
+            try {
+                if (!currentUser || !currentUser.user_id) {
+                    console.error('User ID not available');
+                    showToast('用户信息获取失败，请重新登录', 'error');
+                    return;
+                }
+                const response = await fetch(`/conference/selectConferenceAll?convener_id=${currentUser.user_id}`);
+                const data = await response.json();
+                if (data.state === 200) {
+                    const conferenceList = document.getElementById('conferenceList');
+                    conferenceList.innerHTML = '';
+                    
+                    if (data.data && data.data.length > 0) {
+                        data.data.forEach(conference => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${conference.conference_name}</td>
+                                <td>${conference.conference_state ? '已审核' : '未审核'}</td>
+                                <td>
+                                    <div class="conference-info">
+                                        <span class="conference-code">${conference.invitation_code}</span>
+                                        <button class="btn-modify" onclick="showModifyInvCodeModal(${conference.conference_id})">修改</button>
+                                    </div>
+                                </td>
+                                <td class="conference-remarks">暂无备注</td>
+                                <td class="conference-actions">
+                                    <button class="btn-modify" onclick="showModifyConferenceNameModal(${conference.conference_id})">编辑</button>
+                                    <button class="btn-modify" onclick="showDeleteConfirmModal(${conference.conference_id})">删除</button>
+                                </td>
+                            `;
+                            conferenceList.appendChild(tr);
+                        });
+                    } else {
+                        conferenceList.innerHTML = '<tr><td colspan="5" class="no-data">暂无会议数据</td></tr>';
+                    }
+                } else {
+                    showToast('加载会议列表失败', 'error');
+                }
+            } catch (error) {
+                console.error('Failed to load conferences:', error);
+                showToast('加载会议列表失败', 'error');
+            }
+        }
+
+        // 显示修改邀请码模态框
+        function showModifyInvCodeModal(conferenceId) {
+            document.getElementById('modifyInvCodeConferenceId').value = conferenceId;
+            document.getElementById('modifyInvCodeModal').classList.add('show');
+        }
+
+        // 显示修改会议名称模态框
+        function showModifyConferenceNameModal(conferenceId) {
+            document.getElementById('modifyConferenceNameId').value = conferenceId;
+            document.getElementById('modifyConferenceNameModal').classList.add('show');
+        }
+
+        // 关闭所有模态框的函数
+        function closeAllModals() {
+            document.getElementById('modifyInvCodeModal').classList.remove('show');
+            document.getElementById('modifyConferenceNameModal').classList.remove('show');
+            document.getElementById('createConferenceModal').classList.remove('show');
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 初始化修改邀请码表单事件
+        document.getElementById('modifyInvCodeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const conferenceId = document.getElementById('modifyInvCodeConferenceId').value;
+            const newInvCode = document.getElementById('newInvCode').value;
+
+            try {
+                const response = await fetch(`/conference/alterInvcode?conference_id=${conferenceId}&invitation_code=${encodeURIComponent(newInvCode)}`);
+                const data = await response.json();
+                if (data.state === 200) {
+                    closeAllModals();
+                    document.getElementById('modifyInvCodeForm').reset();
+                    showToast('邀请码修改成功！', 'success');
+                    window.location.reload();
+                } else {
+                    showToast('修改失败：' + (data.msg || '请稍后重试'), 'error');
+                }
+            } catch (error) {
+                console.error('Failed to modify invitation code:', error);
+                showToast('修改失败：网络错误，请稍后重试', 'error');
+            }
+        });
+
+        // 初始化修改会议名称表单事件
+        document.getElementById('modifyConferenceNameForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const conferenceId = document.getElementById('modifyConferenceNameId').value;
+            const newConferenceName = document.getElementById('newConferenceName').value;
+
+            try {
+                const response = await fetch(`/conference/alterConference?conference_id=${conferenceId}&conference_name=${encodeURIComponent(newConferenceName)}`);
+                const data = await response.json();
+                if (data.state === 200) {
+                    closeAllModals();
+                    document.getElementById('modifyConferenceNameForm').reset();
+                    showToast('会议名称修改成功！', 'success');
+                    window.location.reload();
+                } else {
+                    showToast('修改失败：' + (data.msg || '请稍后重试'), 'error');
+                }
+            } catch (error) {
+                console.error('Failed to modify conference name:', error);
+                showToast('修改失败：网络错误，请稍后重试', 'error');
+            }
+        });
+
+        // 取消修改邀请码
+        document.getElementById('cancelModifyInvCode').addEventListener('click', function() {
+            closeAllModals();
+            document.getElementById('modifyInvCodeForm').reset();
+        });
+
+        // 取消修改会议名称
+        document.getElementById('cancelModifyConferenceName').addEventListener('click', function() {
+            closeAllModals();
+            document.getElementById('modifyConferenceNameForm').reset();
+        });
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeAllModals();
+            }
+        });
+
+        // 点击其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('userDropdown').classList.remove('show');
+            }
+        });
+
+        // 显示删除确认对话框
+        function showDeleteConfirmModal(conferenceId) {
+            deleteConferenceId = conferenceId;
+            document.getElementById('deleteConfirmModal').classList.add('show');
+        }
+
+        // 删除会议
+        async function deleteConference(conferenceId) {
+            try {
+                const response = await fetch(`/conference/deleteConference?conference_id=${conferenceId}`);
+                const data = await response.json();
+                if (data.state === 200) {
+                    showToast('会议删除成功！', 'success');
+                    window.location.reload();
+                } else {
+                    showToast('删除失败：' + (data.msg || '请稍后重试'), 'error');
+                }
+            } catch (error) {
+                console.error('Failed to delete conference:', error);
+                showToast('删除失败：网络错误，请稍后重试', 'error');
+            }
+        }
+
+        // 初始化删除确认对话框事件
+        document.getElementById('cancelDelete').addEventListener('click', function() {
+            document.getElementById('deleteConfirmModal').classList.remove('show');
+            deleteConferenceId = null;
+        });
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (deleteConferenceId) {
+                deleteConference(deleteConferenceId);
+                document.getElementById('deleteConfirmModal').classList.remove('show');
+                deleteConferenceId = null;
+            }
+        });
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('confirm-modal')) {
+                document.getElementById('deleteConfirmModal').classList.remove('show');
+                deleteConferenceId = null;
+            }
+        });
+    </script>
+</body>
+</html> 
