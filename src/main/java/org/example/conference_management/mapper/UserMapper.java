@@ -10,7 +10,7 @@ import org.example.conference_management.vo.userVo;
 public interface UserMapper {
 
 
-    @Insert("insert into user(password,user_name,isAdmin) values(#{password},#{user_name},#{isAdmin})")
+    @Insert("insert into user(password,user_name,isAdmin) values(#{password},#{user_name},#{adminFlag})")
     void userRegister(userVo u);
 
     @Select("select * from user where user_name=#{user_name}")
