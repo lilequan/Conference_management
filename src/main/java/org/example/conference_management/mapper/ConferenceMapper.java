@@ -35,4 +35,9 @@ public interface ConferenceMapper {
 
     @Delete("delete from conference where conference_id = #{conference_id}")
     boolean deleteConference(int conference_id);
+
+    @Update("update user_conference set roundTripTime = #{ucv.round_trip_time}, " +
+            "accommodationRequirements = #{ucv.accommodation_requirements}, " +
+            "remarks = #{ucv.remarks}")
+    void checkConference(user_conferenceVo ucv);
 }

@@ -2,6 +2,7 @@ package org.example.conference_management.service.Conference_service;
 
 import org.example.conference_management.pojo.R;
 import org.example.conference_management.vo.conferenceVo;
+import org.example.conference_management.vo.userVo;
 import org.example.conference_management.vo.user_conferenceVo;
 
 public interface ConferenceService {
@@ -19,4 +20,8 @@ public interface ConferenceService {
     R alterConference(int conference_id, String conference_name);
 
     R deleteConference(int conference_id);
+
+    R signConference(userVo userVo);
+
+    R checkManage(user_conferenceVo user_conferenceVo);
 }
