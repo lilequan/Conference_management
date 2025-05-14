@@ -53,9 +53,9 @@ public class ConferenceController {
 
     //TODO 签到以及入住管理
     //1.会议签到
-    @PostMapping("/signConference")
-    public R signConference(@RequestBody userVo userVo){
-        return conferenceService.signConference(userVo);
+    @GetMapping("/signConference")
+    public R signConference(@PathParam("user_id")int user_id,@PathParam("conference_id")int conference_id){
+        return conferenceService.signConference(user_id,conference_id);
     }
 
     //2.入住管理

@@ -40,4 +40,8 @@ public interface ConferenceMapper {
             "accommodationRequirements = #{ucv.accommodation_requirements}, " +
             "remarks = #{ucv.remarks}")
     void checkConference(user_conferenceVo ucv);
+
+    @Update("update user_conference set signed = 1 where user_id = #{user_id} and conference_id = #{conference_id}")
+    void signConference(int user_id,int conference_id);
+
 }
