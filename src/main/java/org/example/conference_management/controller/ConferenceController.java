@@ -5,6 +5,7 @@ import jakarta.websocket.server.PathParam;
 import org.example.conference_management.pojo.R;
 import org.example.conference_management.service.Conference_service.ConferenceService;
 import org.example.conference_management.vo.conferenceVo;
+import org.example.conference_management.vo.userVo;
 import org.example.conference_management.vo.user_conferenceVo;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,4 +52,15 @@ public class ConferenceController {
     }
 
     //TODO 签到以及入住管理
+    //1.会议签到
+    @PostMapping("/signConference")
+    public R signConference(@RequestBody userVo userVo){
+        return conferenceService.signConference(userVo);
+    }
+
+    //2.入住管理
+    @PostMapping("/checkManage")
+    public R checkManage(@RequestBody user_conferenceVo user_conferenceVo){
+        return conferenceService.checkManage(user_conferenceVo);
+    }
 }

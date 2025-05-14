@@ -2,10 +2,13 @@ package org.example.conference_management.service.Conference_service.Impl;
 
 import jakarta.annotation.Resource;
 import org.example.conference_management.mapper.ConferenceMapper;
+import org.example.conference_management.mapper.UserMapper;
 import org.example.conference_management.pojo.R;
 import org.example.conference_management.pojo.conference;
+import org.example.conference_management.pojo.user;
 import org.example.conference_management.service.Conference_service.ConferenceService;
 import org.example.conference_management.vo.conferenceVo;
+import org.example.conference_management.vo.userVo;
 import org.example.conference_management.vo.user_conferenceVo;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 
     @Resource
     private ConferenceMapper conferenceMapper;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public R CreateConference(conferenceVo conferenceVo) {
@@ -76,5 +82,18 @@ public class ConferenceServiceImpl implements ConferenceService {
     public R deleteConference(int conference_id) {
         boolean flag =  conferenceMapper.deleteConference(conference_id);
         return flag?R.SUCCESS("删除成功"):R.ERROR("无效的会议");
+    }
+
+    @Override
+    public R signConference(userVo userVo) {
+        user user = userMapper.userLogin(userVo);
+        user.setSigned(true);
+        return R.SUCCESS("签到成功");
+    }
+
+    @Override
+    public R checkManage(user_conferenceVo user_conferenceVo) {
+        conferenceMapper.checkConference(user_conferenceVo);
+        return R.SUCCESS("入住信息修改成功");
     }
 }

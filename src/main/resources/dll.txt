@@ -19,10 +19,11 @@ CREATE TABLE `user` (
 
 
 CREATE TABLE `user_conference` (
-                                   `user_id` int NOT NULL COMMENT '参会用户id',
-                                   `conference_id` int DEFAULT NULL COMMENT '会议id',
-                                   `round_trip_time` varchar(255) DEFAULT NULL COMMENT '往返时间',
-                                   `accommodation_requirements` varchar(1500) DEFAULT '无' COMMENT '住宿要求',
-                                   `remarks` varchar(1500) DEFAULT '无' COMMENT '备注',
-                                   PRIMARY KEY (`user_id`)
+  `user_id` int NOT NULL COMMENT '参会用户id',
+  `conference_id` int DEFAULT NULL COMMENT '会议id',
+  `round_trip_time` varchar(255) DEFAULT NULL COMMENT '往返时间',
+  `accommodation_requirements` varchar(1500) DEFAULT '无' COMMENT '住宿要求',
+  `remarks` varchar(1500) DEFAULT '无' COMMENT '备注',
+  `signed` tinyint DEFAULT NULL COMMENT '是否签到',
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户会议关系表';
