@@ -5,6 +5,5 @@ import lombok.Data;
 public class userVo {
     private String user_name;
     private String password;
-    private boolean isAdmin;
-
+    private boolean adminFlag;
 }

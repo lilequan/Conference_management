@@ -18,13 +18,13 @@ public class ConferenceController {
 
     //创建会议
     @PostMapping("/createConference")
-    public R CreateConference(@RequestBody conferenceVo conferenceVo){
+    public R createConference(@RequestBody conferenceVo conferenceVo){
         return conferenceService.CreateConference(conferenceVo);
     }
 
     //选择加入会议(以邀请码加入)
     @PostMapping("/joinConference")
-    public R JoinConference(@RequestBody user_conferenceVo ucv){
+    public R joinConference(@RequestBody user_conferenceVo ucv){
         return conferenceService.JoinConference(ucv);
     }
 

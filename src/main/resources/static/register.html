@@ -154,11 +154,11 @@
                 <label>用户类别</label>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="isAdmin" value="false" checked>
+                        <input type="radio" name="adminFlag" value="false" checked>
                         普通用户
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="isAdmin" value="true">
+                        <input type="radio" name="adminFlag" value="true">
                         管理员
                     </label>
                 </div>
@@ -192,7 +192,7 @@
             const formData = {
                 user_name: document.getElementById('username').value,
                 password: document.getElementById('password').value,
-                isAdmin: document.querySelector('input[name="isAdmin"]:checked').value === 'true'
+                adminFlag: document.querySelector('input[name="adminFlag"]:checked').value === 'true'
             };
 
             try {
@@ -210,7 +210,7 @@
                     // 存储用户信息
                     localStorage.setItem('user', JSON.stringify({
                         user_name: formData.user_name,
-                        isAdmin: formData.isAdmin
+                        adminFlag: formData.adminFlag
                     }));
                     // 延迟跳转，让用户看到成功提示
                     setTimeout(() => {
