@@ -1,6 +1,7 @@
 package org.example.conference_management.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.example.conference_management.pojo.conference;
@@ -18,6 +19,7 @@ public interface AdminMapper {
     void ConferenceReview(int conference_id);
 
     @Select("select user_id,user_name,email,isAdmin from conference_management.user")
+    @Result(property = "adminFlag",column = "isAdmin")
     List<user> selectUserAll();
 
     @Update("update conference_management.user set isAdmin = true where user_id = #{user_id}")

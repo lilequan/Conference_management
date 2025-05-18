@@ -19,4 +19,8 @@ public interface ConferenceService {
     R alterConference(int conference_id, String conference_name);
 
     R deleteConference(int conference_id);
+
+    R selectReviewedConference();
+
+    R selectJoinedConference(int user_id);
 }
