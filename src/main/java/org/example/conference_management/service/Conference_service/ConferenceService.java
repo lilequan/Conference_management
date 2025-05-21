@@ -23,4 +23,8 @@ public interface ConferenceService {
     R signConference(int user_id, int conference_id);
 
     R checkManage(user_conferenceVo user_conferenceVo);
+
+    R selectReviewedConference();
+
+    R selectJoinedConference(int user_id);
 }

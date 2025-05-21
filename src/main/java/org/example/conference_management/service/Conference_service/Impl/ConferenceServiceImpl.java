@@ -31,7 +31,7 @@ public class ConferenceServiceImpl implements ConferenceService {
     public R JoinConference(user_conferenceVo ucv) {
         conference conference = conferenceMapper.SelectById(ucv.getConference_id());
         if (conference != null) {
-            if (conference.getInvitation_code().equals(ucv.getInvitation_code())) {
+            if (conference.getInvitation_code().equals(ucv.getInv_Code())) {
                 conferenceMapper.JoinConference(ucv);
                 return R.SUCCESS("加入成功");
             }
@@ -92,5 +92,20 @@ public class ConferenceServiceImpl implements ConferenceService {
     public R checkManage(user_conferenceVo ucv) {
         conferenceMapper.checkConference(ucv);
         return R.SUCCESS("入住信息修改成功");
+    }
+
+    @Override
+    public R selectReviewedConference() {
+        List<conference> conferences =  conferenceMapper.selectReviewedConference();
+        if (conferences==null)return R.ERROR("无会议可参加");
+        return R.SUCCESS(conferences);
+    }
+
+    @Override
+    public R selectJoinedConference(int user_id) {
+        List<Integer> conferenceIds =   conferenceMapper.selectJoinedConference(user_id);
+        if (conferenceIds==null)return R.ERROR("无加入会议");
+        List<conference> conferences =  conferenceMapper.SelectByIds(conferenceIds);
+        return R.SUCCESS(conferences);
     }
 }

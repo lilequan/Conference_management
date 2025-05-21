@@ -29,7 +29,7 @@ public class AdminController {
     }
 
     //TODO 用户管理
-    @GetMapping("selectUserAll")
+    @GetMapping("/selectUserAll")
     public R selectUserAll(){
         return adminService.selectUserAll();
     }
