@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.conference_management.mapper.ConferenceMapper">
+    <select id="pageQuery" resultType="org.example.conference_management.pojo.Conference">
+        select * from conference
+        <where>
+            <if test="name != null and name != ''">
+                and conference_name like concat('%',#{name},'%')
+                or convener_id like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by conference_id desc
+    </select>
+</mapper>
