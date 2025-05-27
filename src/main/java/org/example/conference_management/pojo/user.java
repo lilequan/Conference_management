@@ -8,6 +8,5 @@ public class user {
    private String password;
    private String email;
    private String user_name;
-   private boolean isAdmin;
-   private boolean signed;
+   private boolean adminFlag;
 }

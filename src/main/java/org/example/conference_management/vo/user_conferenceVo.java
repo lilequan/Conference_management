@@ -1,8 +1,11 @@
 package org.example.conference_management.vo;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
+import lombok.Value;
 
 import java.util.Date;
+
 
 @Data
 public class user_conferenceVo {
@@ -11,5 +14,6 @@ public class user_conferenceVo {
     private String round_trip_time;
     private String accommodation_requirements;
     private String remarks;
-    private String invitation_code;
+
+    private String inv_Code;
 }
