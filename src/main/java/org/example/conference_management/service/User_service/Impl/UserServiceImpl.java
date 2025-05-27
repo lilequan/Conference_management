@@ -26,11 +26,8 @@ public class UserServiceImpl implements UserService {
     public R userLogin(userVo u) {
 
         user user = userMapper.userLogin(u);
-
         if (user != null) {
-            if(u.isAdminFlag()!=user.isAdminFlag())return R.ERROR("用户权限异常");
             if (user.getPassword().equals(u.getPassword())) {
-
                 //userContextHolder.set(user);
                 return R.SUCCESS("登入成功");
             } else {
@@ -39,8 +36,6 @@ public class UserServiceImpl implements UserService {
         }
         return R.ERROR("test");
     }
-
-
 
     @Override
     public R selectById(String user_name) {

@@ -19,8 +19,8 @@ public class R {
     public static R  ERROR(Object data){
         R r = new R();
         r.setState(-1);
-        r.setMessage(data.toString());
-        r.setData(null);
+        r.setMessage("error");
+        r.setData(data);
         return r;
     }
 }

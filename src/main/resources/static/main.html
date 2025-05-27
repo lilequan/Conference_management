@@ -456,226 +456,6 @@
             font-weight: 600;
             color: #4a5568;
         }
-
-        /* 用户管理列表样式 */
-        .user-list {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .user-item {
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .user-item:last-child {
-            border-bottom: none;
-        }
-
-        .btn-alter-power {
-            background-color: #48bb78;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 0.5rem;
-        }
-
-        .btn-alter-power:hover {
-            background-color: #38a169;
-        }
-
-        .btn-delete {
-            background-color: #f56565;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-delete:hover {
-            background-color: #e53e3e;
-        }
-
-        .btn-review {
-            background-color: #4299e1;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 0.5rem;
-        }
-
-        .btn-review:hover {
-            background-color: #3182ce;
-        }
-
-        /* 确认对话框样式 */
-        .confirm-dialog {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .confirm-dialog.show {
-            display: flex;
-        }
-
-        .confirm-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .confirm-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        /* 添加子菜单样式 */
-        .submenu {
-            margin-left: 1rem;
-            display: none;
-        }
-
-        .submenu.show {
-            display: block;
-        }
-
-        .submenu-item {
-            padding: 0.6rem 1rem;
-            margin: 0.3rem 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .submenu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .submenu-item.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* 加入会议表单样式 */
-        .join-form {
-            padding: 1rem;
-        }
-
-        .join-form .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .join-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #4a5568;
-        }
-
-        .join-form input,
-        .join-form textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .join-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        /* 签到按钮样式 */
-        .btn-checkin {
-            background-color: #48bb78;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 0.5rem;
-        }
-
-        .btn-checkin:hover {
-            background-color: #38a169;
-        }
-
-        .btn-checkin.disabled {
-            background-color: #cbd5e0;
-            cursor: not-allowed;
-        }
-
-        /* 签到确认对话框样式 */
-        .checkin-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .checkin-modal.show {
-            display: flex;
-        }
-
-        .checkin-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .checkin-title {
-            font-size: 1.25rem;
-            color: #2d3748;
-            margin-bottom: 1rem;
-        }
-
-        .checkin-message {
-            color: #4a5568;
-            margin-bottom: 1.5rem;
-        }
-
-        .checkin-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
     </style>
 </head>
 <body>
@@ -804,52 +584,10 @@
     <!-- 提示消息 -->
     <div class="toast" id="toast"></div>
 
-    <!-- 加入会议表单 -->
-    <div class="modal" id="joinConferenceModal">
-        <div class="modal-content">
-            <h2>加入会议</h2>
-            <form id="joinConferenceForm" class="join-form">
-                <input type="hidden" id="joinConferenceId" name="conference_id">
-                <div class="form-group">
-                    <label for="round_trip_time">往返时间</label>
-                    <input type="text" id="round_trip_time" name="round_trip_time">
-                </div>
-                <div class="form-group">
-                    <label for="accommodation_requirements">住宿要求</label>
-                    <input type="text" id="accommodation_requirements" name="accommodation_requirements">
-                </div>
-                <div class="form-group">
-                    <label for="remarks">备注</label>
-                    <textarea id="remarks" name="remarks"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="inv_Code">邀请码 <span style="color: red;">*</span></label>
-                    <input type="text" id="inv_Code" name="inv_Code" required>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" onclick="closeAllModals()">取消</button>
-                    <button type="submit" class="btn btn-primary">确认加入</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- 签到确认对话框 -->
-    <div class="checkin-modal" id="checkinModal">
-        <div class="checkin-content">
-            <div class="checkin-title">确认签到</div>
-            <div class="checkin-message">确定要签到该会议吗？</div>
-            <div class="checkin-buttons">
-                <button class="btn-confirm cancel" onclick="closeCheckinModal()">取消</button>
-                <button class="btn-confirm danger" onclick="confirmCheckin()">确认签到</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // 用户信息
         let currentUser = null;
-        let adminFlag = false;
+        let isAdmin = false;
 
         // 初始化页面
         document.addEventListener('DOMContentLoaded', async function() {
@@ -896,8 +634,8 @@
                     throw new Error('User ID is missing');
                 }
 
-                adminFlag = currentUser.adminFlag || false;
-                console.log('User authentication successful:', { userId: currentUser.user_id, adminFlag: adminFlag });
+                isAdmin = currentUser.isAdmin || false;
+                console.log('User authentication successful:', { userId: currentUser.user_id, isAdmin: isAdmin });
 
                 // 初始化页面内容
                 initializeMenu();
@@ -975,14 +713,7 @@
             const menuItems = document.getElementById('menuItems');
             const userMenu = [
                 { text: '会议管理', id: 'conferenceManagement' },
-                { 
-                    text: '参加会议', 
-                    id: 'joinConference',
-                    submenu: [
-                        { text: '可加入会议', id: 'availableConferences' },
-                        { text: '已加入会议', id: 'joinedConferences' }
-                    ]
-                },
+                { text: '加入会议', id: 'joinConference' },
                 { text: '虚拟缴费', id: 'virtualPayment' }
             ];
 
@@ -992,34 +723,13 @@
                 { text: '会议审核', id: 'conferenceReview' }
             ];
 
-            const menu = adminFlag ? adminMenu : userMenu;
+            const menu = isAdmin ? adminMenu : userMenu;
             menu.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'menu-item';
                 div.textContent = item.text;
                 div.id = item.id;
-                
-                if (item.submenu) {
-                    const submenu = document.createElement('div');
-                    submenu.className = 'submenu';
-                    item.submenu.forEach(subItem => {
-                        const subDiv = document.createElement('div');
-                        subDiv.className = 'submenu-item';
-                        subDiv.textContent = subItem.text;
-                        subDiv.id = subItem.id;
-                        subDiv.addEventListener('click', () => handleMenuClick(subItem.id));
-                        submenu.appendChild(subDiv);
-                    });
-                    div.appendChild(submenu);
-                    div.addEventListener('click', function(e) {
-                        if (e.target === div) {
-                            submenu.classList.toggle('show');
-                        }
-                    });
-                } else {
-                    div.addEventListener('click', () => handleMenuClick(item.id));
-                }
-                
+                div.addEventListener('click', () => handleMenuClick(item.id));
                 menuItems.appendChild(div);
             });
         }
@@ -1027,7 +737,7 @@
         // 处理菜单点击
         function handleMenuClick(menuId) {
             // 移除所有菜单项的active类
-            document.querySelectorAll('.menu-item, .submenu-item').forEach(item => {
+            document.querySelectorAll('.menu-item').forEach(item => {
                 item.classList.remove('active');
             });
             // 为当前点击的菜单项添加active类
@@ -1038,20 +748,17 @@
                 case 'conferenceManagement':
                     loadConferences();
                     break;
-                case 'availableConferences':
-                    loadAvailableConferences();
-                    break;
-                case 'joinedConferences':
-                    loadJoinedConferences();
+                case 'joinConference':
+                    // TODO: 实现加入会议功能
                     break;
                 case 'virtualPayment':
                     // TODO: 实现虚拟缴费功能
                     break;
                 case 'userManagement':
-                    loadUsers();
+                    // TODO: 实现用户管理功能
                     break;
                 case 'conferenceReview':
-                    loadUnreviewedConferences();
+                    // TODO: 实现会议审核功能
                     break;
             }
         }
@@ -1066,38 +773,16 @@
                     showToast('用户信息获取失败，请重新登录', 'error');
                     return;
                 }
-
                 const response = await fetch(`/conference/selectConferenceAll?convener_id=${currentUser.user_id}`);
                 const data = await response.json();
-                
                 if (data.state === 200) {
-                    const content = document.querySelector('.content');
-                    content.innerHTML = `
-                        <div class="conference-list">
-                            <div class="conference-header">
-                                <h2>会议管理</h2>
-                                <div class="add-conference" id="addConference">+</div>
-                            </div>
-                            <table class="conference-table">
-                                <thead>
-                                    <tr>
-                                        <th>会议名称</th>
-                                        <th>状态</th>
-                                        <th>邀请码</th>
-                                        <th>备注</th>
-                                        <th class="table-header">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="conferenceList">
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-
                     const conferenceList = document.getElementById('conferenceList');
+                    conferenceList.innerHTML = '';
+                    
                     if (data.data && data.data.length > 0) {
-                        conferenceList.innerHTML = data.data.map(conference => `
-                            <tr>
+                        data.data.forEach(conference => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
                                 <td>${conference.conference_name}</td>
                                 <td>${conference.conference_state ? '已审核' : '未审核'}</td>
                                 <td>
@@ -1111,22 +796,18 @@
                                     <button class="btn-modify" onclick="showModifyConferenceNameModal(${conference.conference_id})">编辑</button>
                                     <button class="btn-modify" onclick="showDeleteConfirmModal(${conference.conference_id})">删除</button>
                                 </td>
-                            </tr>
-                        `).join('');
+                            `;
+                            conferenceList.appendChild(tr);
+                        });
                     } else {
                         conferenceList.innerHTML = '<tr><td colspan="5" class="no-data">暂无会议数据</td></tr>';
                     }
-
-                    // 重新绑定添加会议按钮事件
-                    document.getElementById('addConference').addEventListener('click', function() {
-                        document.getElementById('createConferenceModal').classList.add('show');
-                    });
                 } else {
-                    showToast('加载会议列表失败：' + (data.msg || '请稍后重试'), 'error');
+                    showToast('加载会议列表失败', 'error');
                 }
             } catch (error) {
                 console.error('Failed to load conferences:', error);
-                showToast('加载会议列表失败：网络错误，请稍后重试', 'error');
+                showToast('加载会议列表失败', 'error');
             }
         }
 
@@ -1147,8 +828,6 @@
             document.getElementById('modifyInvCodeModal').classList.remove('show');
             document.getElementById('modifyConferenceNameModal').classList.remove('show');
             document.getElementById('createConferenceModal').classList.remove('show');
-            document.getElementById('joinConferenceModal').classList.remove('show');
-            document.getElementById('checkinModal').classList.remove('show');
         }
 
         // 显示提示消息
@@ -1278,370 +957,6 @@
                 deleteConferenceId = null;
             }
         });
-
-        // 加载用户列表
-        async function loadUsers() {
-            try {
-                const response = await fetch('/admin/selectUserAll', {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    const content = document.querySelector('.content');
-                    content.innerHTML = `
-                        <div class="conference-list">
-                            <h2>用户管理</h2>
-                            <div id="userList"></div>
-                        </div>
-                    `;
-                    
-                    const userList = document.getElementById('userList');
-                    if (data.data && data.data.length > 0) {
-                        userList.innerHTML = data.data.map(user => `
-                            <div class="conference-item">
-                                <div class="conference-info">
-                                    <h3>用户名：${user.user_name}</h3>
-                                    <p>权限：${user.adminFlag ? '管理员' : '普通用户'}</p>
-                                </div>
-                                <div class="conference-actions">
-                                    <button class="btn-modify" onclick="showAlterPowerConfirm(${user.user_id})">修改权限</button>
-                                    <button class="btn-modify" onclick="deleteUser(${user.user_id})">删除</button>
-                                </div>
-                            </div>
-                        `).join('');
-                    } else {
-                        userList.innerHTML = '<div class="no-data">暂无用户数据</div>';
-                    }
-                } else {
-                    showToast('加载用户列表失败', 'error');
-                }
-            } catch (error) {
-                console.error('加载用户列表失败:', error);
-                showToast('加载用户列表失败', 'error');
-            }
-        }
-
-        // 加载未审核会议
-        async function loadUnreviewedConferences() {
-            try {
-                const response = await fetch('/admin/selectUnReviewConferenceAll', {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    const content = document.querySelector('.content');
-                    content.innerHTML = `
-                        <div class="conference-list">
-                            <h2>会议审核</h2>
-                            <div id="reviewList"></div>
-                        </div>
-                    `;
-                    
-                    const reviewList = document.getElementById('reviewList');
-                    if (data.data && data.data.length > 0) {
-                        reviewList.innerHTML = data.data.map(conference => `
-                            <div class="conference-item">
-                                <div class="conference-info">
-                                    <h3>${conference.conference_name}</h3>
-                                    <p>邀请码：${conference.invitation_code}</p>
-                                </div>
-                                <div class="conference-actions">
-                                    <button class="btn-modify" onclick="showReviewConfirm(${conference.conference_id})">审核通过</button>
-                                    <button class="btn-modify" onclick="deleteConference(${conference.conference_id})">删除</button>
-                                </div>
-                            </div>
-                        `).join('');
-                    } else {
-                        reviewList.innerHTML = '<div class="no-data">暂无待审核会议</div>';
-                    }
-                } else {
-                    showToast('加载未审核会议失败', 'error');
-                }
-            } catch (error) {
-                console.error('加载未审核会议失败:', error);
-                showToast('加载未审核会议失败', 'error');
-            }
-        }
-
-        // 显示修改权限确认对话框
-        function showAlterPowerConfirm(userId) {
-            const dialog = document.getElementById('deleteConfirmModal');
-            document.querySelector('.confirm-title').textContent = '修改权限';
-            document.querySelector('.confirm-message').textContent = '确认将该用户修改为管理员权限？';
-            document.getElementById('confirmDelete').textContent = '确认修改';
-            document.getElementById('confirmDelete').onclick = () => alterUserPower(userId);
-            dialog.classList.add('show');
-        }
-
-        // 显示审核确认对话框
-        function showReviewConfirm(conferenceId) {
-            const dialog = document.getElementById('deleteConfirmModal');
-            document.querySelector('.confirm-title').textContent = '审核会议';
-            document.querySelector('.confirm-message').textContent = '确认通过该会议的审核？';
-            document.getElementById('confirmDelete').textContent = '确认审核';
-            document.getElementById('confirmDelete').onclick = () => reviewConference(conferenceId);
-            dialog.classList.add('show');
-        }
-
-        // 修改用户权限
-        async function alterUserPower(userId) {
-            try {
-                const response = await fetch(`/admin/alterUserPower?user_id=${userId}`, {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    document.getElementById('deleteConfirmModal').classList.remove('show');
-                    showToast('权限修改成功！', 'success');
-                    loadUsers();
-                } else {
-                    showToast('修改权限失败：' + (data.msg || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('修改权限失败:', error);
-                showToast('修改权限失败：网络错误，请稍后重试', 'error');
-            }
-        }
-
-        // 审核会议
-        async function reviewConference(conferenceId) {
-            try {
-                const response = await fetch(`/admin/conferenceReview?conference_id=${conferenceId}`, {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    document.getElementById('deleteConfirmModal').classList.remove('show');
-                    showToast('会议审核通过！', 'success');
-                    loadUnreviewedConferences();
-                } else {
-                    showToast('审核失败：' + (data.msg || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('审核失败:', error);
-                showToast('审核失败：网络错误，请稍后重试', 'error');
-            }
-        }
-
-        // 删除用户
-        async function deleteUser(userId) {
-            if (!confirm('确认删除该用户？')) return;
-            
-            try {
-                const response = await fetch(`/admin/deleteUser?user_id=${userId}`, {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    showToast('用户删除成功！', 'success');
-                    loadUsers();
-                } else {
-                    showToast('删除失败：' + (data.msg || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('删除失败:', error);
-                showToast('删除失败：网络错误，请稍后重试', 'error');
-            }
-        }
-
-        // 加载可加入会议列表
-        async function loadAvailableConferences() {
-            try {
-                const response = await fetch('/conference/selectReviewedConference', {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    const content = document.querySelector('.content');
-                    content.innerHTML = `
-                        <div class="conference-list">
-                            <h2>可加入会议</h2>
-                            <div id="availableConferenceList"></div>
-                        </div>
-                    `;
-                    
-                    const conferenceList = document.getElementById('availableConferenceList');
-                    if (data.data && data.data.length > 0) {
-                        conferenceList.innerHTML = data.data.map(conference => `
-                            <div class="conference-item">
-                                <div class="conference-info">
-                                    <h3>${conference.conference_name}</h3>
-                                    <p>邀请码：${conference.invitation_code}</p>
-                                </div>
-                                <div class="conference-actions">
-                                    <button class="btn-modify" onclick="showJoinConferenceModal(${conference.conference_id})">加入</button>
-                                </div>
-                            </div>
-                        `).join('');
-                    } else {
-                        conferenceList.innerHTML = '<div class="no-data">暂无可加入的会议</div>';
-                    }
-                } else {
-                    showToast('加载会议列表失败：' + (data.msg || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('加载会议列表失败:', error);
-                showToast('加载会议列表失败：网络错误，请稍后重试', 'error');
-            }
-        }
-
-        // 显示加入会议表单
-        function showJoinConferenceModal(conferenceId) {
-            document.getElementById('joinConferenceId').value = conferenceId;
-            document.getElementById('joinConferenceModal').classList.add('show');
-        }
-
-        // 初始化加入会议表单事件
-        document.getElementById('joinConferenceForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            if (!currentUser || !currentUser.user_id) {
-                showToast('用户信息获取失败，请重新登录', 'error');
-                return;
-            }
-            
-            const formData = {
-                user_id: currentUser.user_id,
-                conference_id: document.getElementById('joinConferenceId').value,
-                round_trip_time: document.getElementById('round_trip_time').value,
-                accommodation_requirements: document.getElementById('accommodation_requirements').value,
-                remarks: document.getElementById('remarks').value,
-                inv_Code: document.getElementById('inv_Code').value
-            };
-
-            try {
-                const response = await fetch('/conference/joinConference', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
-                switch(data.state) {
-                    case 200:
-                        closeAllModals();
-                        document.getElementById('joinConferenceForm').reset();
-                        showToast('成功加入会议！', 'success');
-                        loadAvailableConferences();
-                        break;
-                    case -1:
-                        showToast('加入失败：' + (data.message || '错误的邀请码'), 'error');
-                        break;
-                    case 500:
-                        showToast('该会议已加入', 'error');
-                        break;
-                    default:
-                        showToast('加入失败：' + (data.message || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('加入会议失败:', error);
-                showToast('加入失败：网络错误，请稍后重试', 'error');
-            }
-        });
-
-        // 加载已加入会议列表
-        async function loadJoinedConferences() {
-            try {
-                if (!currentUser || !currentUser.user_id) {
-                    showToast('用户信息获取失败，请重新登录', 'error');
-                    return;
-                }
-
-                const response = await fetch(`/conference/selectJoinedConference?user_id=${currentUser.user_id}`, {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                
-                if (data.state === 200) {
-                    const content = document.querySelector('.content');
-                    content.innerHTML = `
-                        <div class="conference-list">
-                            <h2>已加入会议</h2>
-                            <div id="joinedConferenceList"></div>
-                        </div>
-                    `;
-                    
-                    const conferenceList = document.getElementById('joinedConferenceList');
-                    if (data.data && data.data.length > 0) {
-                        conferenceList.innerHTML = data.data.map(conference => `
-                            <div class="conference-item">
-                                <div class="conference-info">
-                                    <h3>${conference.conference_name}</h3>
-                                    <p>邀请码：${conference.invitation_code}</p>
-                                </div>
-                                <div class="conference-actions">
-                                    <button class="btn-checkin" onclick="showCheckinModal(${conference.conference_id})">签到</button>
-                                </div>
-                            </div>
-                        `).join('');
-                    } else {
-                        conferenceList.innerHTML = '<div class="no-data">暂无已加入的会议</div>';
-                    }
-                } else {
-                    showToast('加载会议列表失败：' + (data.msg || '请稍后重试'), 'error');
-                }
-            } catch (error) {
-                console.error('加载会议列表失败:', error);
-                showToast('加载会议列表失败：网络错误，请稍后重试', 'error');
-            }
-        }
-
-        // 显示签到确认对话框
-        function showCheckinModal(conferenceId) {
-            document.getElementById('checkinModal').classList.add('show');
-            // 存储当前要签到的会议ID
-            window.currentCheckinConferenceId = conferenceId;
-        }
-
-        // 关闭签到确认对话框
-        function closeCheckinModal() {
-            document.getElementById('checkinModal').classList.remove('show');
-            window.currentCheckinConferenceId = null;
-        }
-
-        // 确认签到
-        async function confirmCheckin() {
-            if (!window.currentCheckinConferenceId) {
-                showToast('会议信息获取失败', 'error');
-                return;
-            }
-
-            try {
-                // TODO: 调用签到接口
-                // const response = await fetch('/conference/checkin', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify({
-                //         conference_id: window.currentCheckinConferenceId,
-                //         user_id: currentUser.user_id
-                //     })
-                // });
-                // const data = await response.json();
-                // if (data.state === 200) {
-                //     showToast('签到成功！', 'success');
-                //     loadJoinedConferences();
-                // } else {
-                //     showToast('签到失败：' + (data.msg || '请稍后重试'), 'error');
-                // }
-
-                // 临时显示成功消息
-                showToast('签到功能开发中...', 'success');
-                closeCheckinModal();
-            } catch (error) {
-                console.error('签到失败:', error);
-                showToast('签到失败：网络错误，请稍后重试', 'error');
-            }
-        }
     </script>
 </body>
 </html> 
