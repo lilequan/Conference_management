@@ -18,44 +18,61 @@ public class ConferenceController {
 
     //创建会议
     @PostMapping("/createConference")
-    public R CreateConference(@RequestBody conferenceVo conferenceVo){
+    public R createConference(@RequestBody conferenceVo conferenceVo) {
         return conferenceService.CreateConference(conferenceVo);
     }
 
     //选择加入会议(以邀请码加入)
     @PostMapping("/joinConference")
-    public R JoinConference(@RequestBody user_conferenceVo ucv){
+    public R joinConference(@RequestBody user_conferenceVo ucv) {
         return conferenceService.JoinConference(ucv);
+    }
+
+    //查询可加入会议
+    @GetMapping("/selectReviewedConference")
+    public R selectReviewedConference() {
+        return conferenceService.selectReviewedConference();
+    }
+
+    //查询已加入会议
+    @GetMapping("/selectJoinedConference")
+    public R selectJoinedConference(@PathParam("user_id")int user_id){
+        return conferenceService.selectJoinedConference(user_id);
+    }
+
+
+    //会议管理
+    //1.查询会议
+    @GetMapping("/selectConferenceAll")
+    public R selectConferenceAll(@PathParam("convener_id") int convener_id) {
+        return conferenceService.selectConferenceAll(convener_id);
     }
 
     //修改会议特邀码
     @GetMapping("/alterInvcode")
-    public R alterInv_code(@PathParam("conference_id") int conference_id, @PathParam("invitation_code") String invitation_code){
-        return conferenceService.alterInv_code(conference_id,invitation_code);
-    };
-
-    //TODO 会议管理
-    //1.查询会议
-    @GetMapping("/selectConferenceAll")
-    public R selectConferenceAll(@PathParam("convener_id") int convener_id){
-        return conferenceService.selectConferenceAll(convener_id);
+    public R alterInv_code(@PathParam("conference_id") int conference_id, @PathParam("invitation_code") String invitation_code) {
+        return conferenceService.alterInv_code(conference_id, invitation_code);
     }
+
     //2.修改会议内容
     @GetMapping("/alterConference")
-    public R alterConference(@PathParam("conference_id")int conference_id,@PathParam("conference_name") String conference_name){
-        return conferenceService.alterConference(conference_id,conference_name);
-    };
+    public R alterConference(@PathParam("conference_id") int conference_id, @PathParam("conference_name") String conference_name) {
+        return conferenceService.alterConference(conference_id, conference_name);
+    }
+
+
+
     //3.删除会议
     @GetMapping("/deleteConference")
-    public R deleteConference(@PathParam("conference_id")int conference_id){
+    public R deleteConference(@PathParam("conference_id") int conference_id) {
         return conferenceService.deleteConference(conference_id);
     }
 
     //TODO 签到以及入住管理
     //1.会议签到
-    @PostMapping("/signConference")
-    public R signConference(@RequestBody userVo userVo){
-        return conferenceService.signConference(userVo);
+    @GetMapping("/signConference")
+    public R signConference(@PathParam("user_id")int user_id,@PathParam("conference_id")int conference_id){
+        return conferenceService.signConference(user_id,conference_id);
     }
 
     //2.入住管理

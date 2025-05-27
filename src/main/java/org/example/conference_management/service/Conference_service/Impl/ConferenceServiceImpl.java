@@ -5,10 +5,8 @@ import org.example.conference_management.mapper.ConferenceMapper;
 import org.example.conference_management.mapper.UserMapper;
 import org.example.conference_management.pojo.R;
 import org.example.conference_management.pojo.conference;
-import org.example.conference_management.pojo.user;
 import org.example.conference_management.service.Conference_service.ConferenceService;
 import org.example.conference_management.vo.conferenceVo;
-import org.example.conference_management.vo.userVo;
 import org.example.conference_management.vo.user_conferenceVo;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,7 @@ public class ConferenceServiceImpl implements ConferenceService {
     public R JoinConference(user_conferenceVo ucv) {
         conference conference = conferenceMapper.SelectById(ucv.getConference_id());
         if (conference != null) {
-            if (conference.getInvitation_code().equals(ucv.getInvitation_code())) {
+            if (conference.getInvitation_code().equals(ucv.getInv_Code())) {
                 conferenceMapper.JoinConference(ucv);
                 return R.SUCCESS("加入成功");
             }
@@ -85,15 +83,29 @@ public class ConferenceServiceImpl implements ConferenceService {
     }
 
     @Override
-    public R signConference(userVo userVo) {
-        user user = userMapper.userLogin(userVo);
-        user.setSigned(true);
+    public R signConference(int user_id, int conference_id) {
+        conferenceMapper.signConference(user_id,conference_id);
         return R.SUCCESS("签到成功");
     }
 
     @Override
-    public R checkManage(user_conferenceVo user_conferenceVo) {
-        conferenceMapper.checkConference(user_conferenceVo);
+    public R checkManage(user_conferenceVo ucv) {
+        conferenceMapper.checkConference(ucv);
         return R.SUCCESS("入住信息修改成功");
+    }
+
+    @Override
+    public R selectReviewedConference() {
+        List<conference> conferences =  conferenceMapper.selectReviewedConference();
+        if (conferences==null)return R.ERROR("无会议可参加");
+        return R.SUCCESS(conferences);
+    }
+
+    @Override
+    public R selectJoinedConference(int user_id) {
+        List<Integer> conferenceIds =   conferenceMapper.selectJoinedConference(user_id);
+        if (conferenceIds==null)return R.ERROR("无加入会议");
+        List<conference> conferences =  conferenceMapper.SelectByIds(conferenceIds);
+        return R.SUCCESS(conferences);
     }
 }
