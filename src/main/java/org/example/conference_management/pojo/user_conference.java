@@ -10,5 +10,5 @@ public class user_conference {
     private String roundTripTime;
     private String accommodationRequirements;
     private String remarks;
-    private boolean signed;
+
 }
